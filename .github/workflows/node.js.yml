@@ -1,27 +1,19 @@
-name: build
-
+name: steps
 on:
   push:
-    paths:
-      - '**.js'
-
+    branches: [ master ]
 jobs:
-  build:
-    name: my job
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]    
-        node: [12,14]
+  run:
+    runs-on: ubuntu-latest
     steps:
-      - name: my first step
-          env:
-            MY_VAR: Hi there! My name is
-            FIRST_NAME: Atul
-            MIDDLE_NAME: X
-            LAST_NAME: Patel
-          run: |
-            echo $MY_VAR $FIRST_NAME $MIDDLE_NAME $LAST_NAME.
+    - name: My first step
+      env:
+        MY_VAR: Hi there! My name is
+        FIRST_NAME: Atul
+        MIDDLE_NAME: X
+        LAST_NAME: Patel
+      run: |
+        echo $MY_VAR $FIRST_NAME $MIDDLE_NAME $LAST_NAME.
     - name: My second step
       if: success()
       run: echo "The previous step has finished successfully"
@@ -30,9 +22,16 @@ jobs:
       with:
           node-version: 12
           registry-url: https://npm.pkg.github.com/ # if your publishing your package to npm or github package repo
-    - name: My fourth step
-      uses: actions/first-interaction@v1
     # Reference a specific commit
+    - uses: actions/setup-node@0e2f9cd
+    # Reference the major version of a release
+    - uses: actions/setup-node@v1
+    # Reference a minor version of a release
+    - uses: actions/setup-node@v1.2
+    # Reference a branch
+    - uses: actions/setup-node@master
+    - name: my fifth step
+      uses: actions/first-interaction@v1
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         issue-message: 'Message that will be displayed on users'' first issue'
