@@ -1,12 +1,12 @@
 name: steps
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-    - name: My first step
+    - name: My first step ever
       env:
         MY_VAR: Hi there! My name is
         FIRST_NAME: Atul
